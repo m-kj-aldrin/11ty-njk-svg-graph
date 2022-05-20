@@ -1,0 +1,42 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: hsl(var(--col-blk));
+  background-color: hsl(var(--col-wht));
+  font-family: "Courier New", Courier, monospace;
+}
+svg {
+  display: block;
+  fill: currentColor;
+}
+
+#noise-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+/* - - props - - */
+:root {
+  --col-hue: 90;
+  --col-offset-step: -60;
+
+  --col-blk: var(--col-hue) 50% 30%;
+  --col-wht: var(--col-hue) 50% 97.5%;
+
+  --col-primary: var(--col-hue) 75% 85%;
+  --col-secondary: calc(var(--col-hue) + var(--col-offset-step)) 85% 45%;
+  --col-ternary: calc(var(--col-hue) + var(--col-offset-step) * 2) 85% 45%;
+}
+/* - - props - - */

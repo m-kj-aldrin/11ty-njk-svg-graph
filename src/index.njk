@@ -1,0 +1,89 @@
+---
+layout: base.njk
+---
+<svg width="100%" height="100%" viewBox="0 0 256 256">
+  {% set lowVal = 0 %}
+  {% set highVal = 0 %}
+  {# center graph on Y axis and set som text attributes #}
+  <g transform="translate(0 128)" text-anchor="end" font-size="6">
+    {# define the string for the path #}
+    {% set pathString = "" %}
+    {# places the text and circles inside defs to be referenced later, to be able to paint it above the other elements #}
+    <defs>
+      <g transform="translate(0 0)" id="persons">
+        {# iterate over the stats array #}
+        {% set prevX = 0 %}
+        {% set prevY = 0 %}
+        {% for person in stats %}
+          {# divide the current index with the lenght of the array to get a number between 0 and 1 #}
+          {% set f = loop.index0 / ((stats | length) - 1) %}
+          {# set the X coord as a product of the index and the with of the graph #}
+          {% set x = f * 256 %}
+          {# sets the value of the Y axis, in case we need to wrangel the values #}
+          {% set value = person.value / 2 %}
+
+          {# build name and value #}
+          <g transform="translate({{ x }} {{ -value }})" letter-spacing="-0.25">
+            <circle cx="0" cy="" r="1.5" stroke="hsl(var(--col-wht))"/>
+            {# sets the angel dependent if the value is above or beneath the zero crossing #}
+            {% set angel = 80 if value > 0 else 
+              -80 %}
+            <text x="-4" y="2"  transform="rotate({{ angel }})" >
+              <tspan>{{ person.name }}</tspan>
+              <tspan dx="4">:</tspan>
+              <tspan dx="-2" color="hsl(var(--col-secondary))" >{{ value }}</tspan>
+            </text>
+          </g>
+
+          {# build pathstring #}
+          {% if loop.index == 1 %}
+            {# if first value, just set the Y value #}
+            {% set pathString = "M0," + -value %}
+          {% elif loop.index == 2 %}
+            {# using the bezier command Q (quadratic) #}
+            {% set pathString = pathString + " " + "Q" + (prevX + (x - prevX)/2) + "," + -value + " " + x + "," + -value %}
+          {% else %}
+            {% if ((value - prevY) | abs) > 2 %}
+              {% set bias = 1 if (value - prevY) > 0 else 0.5 %}
+              {% set pathString = pathString + " " + "Q" + (prevX + (x - prevX)/2) + "," + (-value * bias)  + " " + x + "," + -value %}
+            {% else %}
+              {# using the bezier command T to use the previous point as the current controll point and only provide the next coordinate #}
+              {% set pathString = pathString + "T" + x + " " + -value %}
+            {% endif %}
+          {% endif %}
+          {% set prevX = x %}
+          {% set prevY = value %}
+
+          {# check min and max val #}
+          {% if value > highVal %}
+            {% set highVal = value %}
+          {% elif value < lowVal %}
+            {% set lowVal = value %}
+          {% endif %}
+        {% endfor %}
+      </g>
+    </defs>
+
+    {# build the max/min value text #}
+    <g transform="translate(0 -88)">
+      <text text-anchor="start">
+        <tspan x="0">
+          <tspan>highest value</tspan>
+          <tspan>:</tspan>
+          <tspan>{{ highVal }}</tspan>
+        </tspan>
+        <tspan x="0" dy="8">
+          <tspan>lowest value</tspan>
+          <tspan>:</tspan>
+          <tspan>{{ lowVal }}</tspan>
+        </tspan>
+      </text>
+    </g>
+
+    {# build the zero crossing for the Y axis #}
+    <line x1="0" x2="256" y1="0" y2="0" stroke="currentColor"/>
+    {# build the path #}
+    <path style="z-index: -1" d="{{ pathString }}" stroke="hsl(var(--col-primary))" fill="transparent" stroke-linecap="round" stroke-linejoin="round"/>
+    {# build the names,values and circles #}
+    <use xlink:href="#persons"></g>
+  </svg>
