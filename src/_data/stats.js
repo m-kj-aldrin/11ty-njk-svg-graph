@@ -1,5 +1,5 @@
 const rand = (a, b) => a + Math.floor(Math.random() * (b - a));
-module.exports = [
+module.exports = () => [
   { name: "Mark", value: rand(-32, 32) },
   { name: "Jane", value: rand(-32, 32) },
   { name: "Caroline", value: rand(-32, 32) },
@@ -15,3 +15,4 @@ module.exports = [
   { name: "Saskia", value: rand(-32, 32) },
   { name: "Mary", value: rand(-32, 32) },
 ];
+

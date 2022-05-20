@@ -1,6 +1,18 @@
 ---
 layout: base.njk
 ---
+{% edge "njk" %}
+<form action="" method="get">
+  <label for="">
+    <select name="sort-type" id="">
+      <option style="font-weight: bold;" value=""  {{'selected' if sortType == null}}>chose a sort type</option>
+      <option value="name" {{'selected' if sortType == 'name'}}>names</option>
+      <option value="value" {{'selected' if sortType == 'value'}}>values</option>
+    </select>
+  </label>
+  <input type="submit" value="sort">
+  <input type="reset" value="reset sorting" onclick="location.search =''">
+</form>
 <svg width="100%" height="100%" viewBox="0 0 256 256">
   {% set lowVal = 0 %}
   {% set highVal = 0 %}
@@ -87,3 +99,4 @@ layout: base.njk
     {# build the names,values and circles #}
     <use xlink:href="#persons"></g>
   </svg>
+  {% endedge %}

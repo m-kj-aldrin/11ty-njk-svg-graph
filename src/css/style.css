@@ -9,6 +9,7 @@ body {
 }
 
 body {
+  padding: 1rem;
   color: hsl(var(--col-blk));
   background-color: hsl(var(--col-wht));
   font-family: "Courier New", Courier, monospace;
@@ -16,6 +17,29 @@ body {
 svg {
   display: block;
   fill: currentColor;
+}
+:where(button,input[type="submit"],input[type="reset"],select){
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: currentColor;
+  padding-inline: 0.5em;
+  padding-block: 0.125em;
+  border-color: currentColor;
+  border-radius: 4px;
+  background-color: hsl(var(--col-wht));
+  border-style: solid;
+}
+input[type="reset"]{
+  color: red;
+}
+input[type="reset"]:hover{
+  background-color: red;
+  color: white;
+}
+:where(button,input[type="submit"]):hover{
+  background-color: hsl(var(--col-blk));
+  color: hsl(var(--col-wht));
 }
 
 #noise-grain {
