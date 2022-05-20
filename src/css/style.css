@@ -56,7 +56,7 @@ input[type="reset"]:hover {
   left: 0;
   pointer-events: none;
   mix-blend-mode: normal;
-  opacity: 0.1;
+  opacity: 0.15;
 }
 
 /* - - props - - */
@@ -64,12 +64,15 @@ input[type="reset"]:hover {
   --col-hue: 90;
   --col-offset-step: -60;
 
-  --col-blk: var(--col-hue) 50% 30%;
-  --col-wht: var(--col-hue) 50% 97.5%;
+  /* --col-blk: var(--col-hue) 50% 30%; */
+  --col-blk: var(--col-hue) calc(-80% + var(--col-sat)) calc(-70% + var(--col-light));
+  --col-wht: var(--col-hue) calc(-80% + var(--col-sat)) calc(160% - var(--col-light));
 
-  --col-primary: var(--col-hue) 75% 85%;
-  --col-secondary: calc(var(--col-hue) + var(--col-offset-step)) 85% 45%;
-  --col-ternary: calc(var(--col-hue) + var(--col-offset-step) * 2) 85% 45%;
+  --col-primary: var(--col-hue) var(--col-sat, 50%) var(--col-light, 70%);
+  --col-secondary: calc(var(--col-hue) + var(--col-offset-step))
+    var(--col-sat, 50%) var(--col-light, 70%);
+  --col-ternary: calc(var(--col-hue) + var(--col-offset-step) * 2)
+    var(--col-sat, 50%) var(--col-light, 70%);
 }
 /* - - props - - */
 

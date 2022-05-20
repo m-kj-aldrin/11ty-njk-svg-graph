@@ -16,8 +16,9 @@ export default async (request, context) => {
 
     const url = new URL(request.url);
     const sortType = url.searchParams.get("sort-type");
-    const baseColorHEX = url.searchParams.get("base-color");
-    const baseColorHSL = hexToHSL(baseColorHEX);
+    let baseColorHEX = url.searchParams.get("base-color") || "#ff5555";
+    let baseColorHSL = hexToHSL(baseColorHEX);
+
 
     edge.config(eleventyConfig => {
       eleventyConfig.addGlobalData("baseColorHEX", baseColorHEX);

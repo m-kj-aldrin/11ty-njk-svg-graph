@@ -1,6 +1,22 @@
 ---
 layout: base.njk
 ---
+{# squigel filter for that boutique hand drawn feel 🖊️ #}
+<svg style="position: fixed;pointer-events: none;" color-interpolation-filters="sRGB">
+  <defs>
+    <filter id="filter-squigell">
+      <feGaussianBlur stdDeviation="1" result="blur" />
+      <feTurbulence type="fractalNoise" seed="2" baseFrequency="0.1" numOctaves="4" />
+      <feDisplacementMap in="blur"
+      scale="3" xChannelSelector="R" yChannelSelector="G" result="wet" />
+
+      <feTurbulence type="turbulence" seed="3" baseFrequency="0.5" numOctaves="2" />
+      <feDisplacementMap in="wet" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+
+      <feComposite in="SourceGraphic" operator="arithmetic" k1="0.8" k2="0.4" k3="0.25" />
+    </filter>
+  </defs>
+</svg>
 {% edge "njk" %}
 <form action="" method="get" onchange="this.submit()">
   <fieldset class="flow">
@@ -86,26 +102,27 @@ layout: base.njk
     </defs>
 
     {# build the max/min value text #}
-    <g transform="translate(0 -88)">
-      <text text-anchor="start">
-        <tspan x="0">
-          <tspan>highest value</tspan>
-          <tspan>:</tspan>
-          <tspan>{{ highVal }}</tspan>
-        </tspan>
-        <tspan x="0" dy="8">
-          <tspan>lowest value</tspan>
-          <tspan>:</tspan>
-          <tspan>{{ lowVal }}</tspan>
-        </tspan>
-      </text>
+    <g filter="url(#filter-squigell)">
+      <g transform="translate(0 -88)">
+        <text text-anchor="start">
+          <tspan x="0">
+            <tspan>highest value</tspan>
+            <tspan>:</tspan>
+            <tspan>{{ highVal }}</tspan>
+          </tspan>
+          <tspan x="0" dy="8">
+            <tspan>lowest value</tspan>
+            <tspan>:</tspan>
+            <tspan>{{ lowVal }}</tspan>
+          </tspan>
+        </text>
+      </g>
+      {# build the zero crossing for the Y axis #}
+      <line x1="0" x2="256" y1="0" y2="0" stroke="currentColor"/>
+      {# build the path #}
+      <path  style="z-index: -1" d="{{ pathString }}" stroke="hsl(var(--col-primary))" fill="transparent" stroke-linecap="round" stroke-linejoin="round"/>
+      {# build the names,values and circles #}
+      <use xlink:href="#persons"></g>
     </g>
-
-    {# build the zero crossing for the Y axis #}
-    <line x1="0" x2="256" y1="0" y2="0" stroke="currentColor"/>
-    {# build the path #}
-    <path style="z-index: -1" d="{{ pathString }}" stroke="hsl(var(--col-primary))" fill="transparent" stroke-linecap="round" stroke-linejoin="round"/>
-    {# build the names,values and circles #}
-    <use xlink:href="#persons"></g>
   </svg>
   {% endedge %}
