@@ -2,17 +2,25 @@
 layout: base.njk
 ---
 {% edge "njk" %}
-<form action="" method="get">
-  <label for="">
-  <span>sort type: </span>
-    <select name="sort-type" id="" required>
-      <option style="font-weight: bold;" value="none" >none</option>
-      <option value="name" {{'selected' if sortType == 'name'}}>names</option>
-      <option value="value" {{'selected' if sortType == 'value'}}>values</option>
-    </select>
-  </label>
-  <input type="submit" value="sort">
-  <input type="reset" value="reset sorting" onclick="location.search =''">
+<form action="" method="get" onchange="this.submit()">
+  <fieldset class="flow">
+    <legend>Settings</legend>
+    <label for="">
+    <span>sort type: </span>
+      <select name="sort-type" id="" >
+        <option style="font-weight: bold;" value="none" >none</option>
+        <option value="name" {{'selected' if sortType == 'name'}}>names</option>
+        <option value="value" {{'selected' if sortType == 'value'}}>values</option>
+      </select>
+    </label>
+    <label for="">
+      <span>base color</span>
+      <input type="color" name="base-color" value="{{baseColorHEX}}" id="">
+    </label>
+    <noscript>
+      <input type="submit" value="sort">
+    </noscript>
+  </fieldset>
 </form>
 <svg width="100%" height="100%" viewBox="0 0 256 256">
   {% set lowVal = 0 %}

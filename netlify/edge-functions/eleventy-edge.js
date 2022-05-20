@@ -1,6 +1,7 @@
 import { EleventyEdge } from "eleventy:edge";
 import precompiledAppData from "./_generated/eleventy-edge-app-data.js";
 import stats from "./stats.js";
+import hexToHSL from "./hex2hsl.js";
 
 export default async (request, context) => {
   try {
@@ -15,9 +16,12 @@ export default async (request, context) => {
 
     const url = new URL(request.url);
     const sortType = url.searchParams.get("sort-type");
+    const baseColorHEX = url.searchParams.get("base-color");
+    const baseColorHSL = hexToHSL(baseColorHEX);
 
-    console.log(sortType)
     edge.config(eleventyConfig => {
+      eleventyConfig.addGlobalData("baseColorHEX", baseColorHEX);
+      eleventyConfig.addGlobalData("baseColorHSL", baseColorHSL);
       eleventyConfig.addGlobalData("sortType", sortType);
       eleventyConfig.addGlobalData("stats", () => stats({ sortType }));
     });

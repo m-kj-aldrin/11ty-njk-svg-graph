@@ -18,7 +18,15 @@ svg {
   display: block;
   fill: currentColor;
 }
-:where(button,input[type="submit"],input[type="reset"],select){
+fieldset {
+  width: max-content;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border-width: 2px;
+  border-color: currentColor;
+  border-style: solid;
+}
+:where(button, input[type="submit"], input[type="reset"], select) {
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
@@ -30,14 +38,14 @@ svg {
   background-color: hsl(var(--col-wht));
   border-style: solid;
 }
-input[type="reset"]{
+input[type="reset"] {
   color: red;
 }
-input[type="reset"]:hover{
+input[type="reset"]:hover {
   background-color: red;
   color: white;
 }
-:where(button,input[type="submit"]):hover{
+:where(button, input[type="submit"]):hover {
   background-color: hsl(var(--col-blk));
   color: hsl(var(--col-wht));
 }
@@ -64,3 +72,10 @@ input[type="reset"]:hover{
   --col-ternary: calc(var(--col-hue) + var(--col-offset-step) * 2) 85% 45%;
 }
 /* - - props - - */
+
+/* -- utils -- */
+.flow > :not(:first-child) {
+  margin-top: var(--spacing, 0.5rem);
+  display: block;
+}
+/* -- utils -- */
