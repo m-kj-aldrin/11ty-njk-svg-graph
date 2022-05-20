@@ -16,7 +16,7 @@ export default async (request, context) => {
     const url = new URL(request.url);
     const sortType = url.searchParams.get("sort-type");
 
-    url.searchParams.get("sort-name");
+    console.log(sortType)
     edge.config(eleventyConfig => {
       eleventyConfig.addGlobalData("sortType", sortType);
       eleventyConfig.addGlobalData("stats", () => stats({ sortType }));

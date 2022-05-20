@@ -16,7 +16,9 @@ export default ({ sortType }) => {
     { name: "Saskia", value: rand(-32, 32) },
     { name: "Mary", value: rand(-32, 32) },
   ];
+
   switch (sortType) {
+    case "none":
     case null:
       return arr;
     case "name":
