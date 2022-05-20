@@ -1,6 +1,6 @@
 import { EleventyEdge } from "eleventy:edge";
 import precompiledAppData from "./_generated/eleventy-edge-app-data.js";
-import stats from "./_generated/stats.js";
+import stats from "./stats.js";
 
 export default async (request, context) => {
   try {
